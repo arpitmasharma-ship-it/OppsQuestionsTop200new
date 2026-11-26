@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ OOP Interview Question & Answer Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg: #0b1120;
+        --panel: #111a2b;
+        --panel2: #172238;
+        --panel3: #0d1526;
+        --text: #e5edf8;
+        --muted: #94a3b8;
+        --border: #25334b;
+        --accent: #818cf8;
+        --accent-bg: rgba(129, 140, 248, 0.12);
+        --green: #34d399;
+        --green-bg: rgba(52, 211, 153, 0.12);
+        --danger: #f87171;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 28px 18px 60px;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1250px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, #182543 0%, #111827 55%, #201b3a 100%);
+        border: 1px solid var(--border);
+        padding: 34px;
+        border-radius: 22px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(129, 140, 248, 0.18), transparent 70%);
+        pointer-events: none;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #c4b5fd;
+        background: #312e81;
+        border: 1px solid #4338ca;
+        padding: 6px 13px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        margin-bottom: 14px;
+    }
+
+    .hero h1 {
+        font-size: clamp(24px, 3.8vw, 38px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+        color: #f8fafc;
+    }
+
+    .hero p {
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 820px;
+        font-size: 15px;
+    }
+
+    /* Stats Grid */
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin-bottom: 22px;
+    }
+
+    .stat {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        padding: 20px 22px;
+        border-radius: 16px;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .stat:hover {
+        border-color: #36496b;
+        transform: translateY(-1px);
+    }
+
+    .stat h2 {
+        font-size: 30px;
+        font-weight: 800;
+        margin-bottom: 4px;
+        color: #f8fafc;
+    }
+
+    .stat:nth-child(2) h2 {
+        color: var(--green);
+    }
+
+    .stat:nth-child(4) h2 {
+        color: var(--accent);
+    }
+
+    .stat p {
+        color: var(--muted);
+        font-size: 13.5px;
+        font-weight: 500;
+    }
+
+    /* Progress Bar Section */
+    .progress-section {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        padding: 20px 22px;
+        border-radius: 16px;
+        margin-bottom: 22px;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .progress-section h3 {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: #25334b;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #818cf8, #34d399);
+        border-radius: 20px;
+        transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-section p {
+        color: var(--muted);
+        font-size: 13.5px;
+        margin-top: 9px;
+    }
+
+    /* Toolbar */
+    .toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: var(--panel);
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        margin-bottom: 16px;
+    }
+
+    .toolbar-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .search-wrapper {
+        position: relative;
+        flex: 1;
+        min-width: 240px;
+    }
+
+    input[type="search"] {
+        width: 100%;
+        background: #0b1220;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 11px 15px;
+        border-radius: 10px;
+        outline: none;
+        font-size: 14px;
+        font-family: inherit;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="search"]:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+    }
+
+    button {
+        border: 1px solid var(--border);
+        background: var(--panel2);
+        color: var(--text);
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13.5px;
+        font-family: inherit;
+        transition: all 0.18s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+        border-color: var(--accent);
+        background: #1d2b47;
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    button.active-filter {
+        background: #4f46e5;
+        border-color: #6366f1;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    }
+
+    button.accent-btn {
+        background: rgba(129, 140, 248, 0.12);
+        border-color: rgba(129, 140, 248, 0.4);
+        color: #c7d2fe;
+    }
+
+    button.accent-btn:hover {
+        background: rgba(129, 140, 248, 0.22);
+        border-color: var(--accent);
+    }
+
+    button.danger {
+        color: #fca5a5;
+        border-color: #7f1d1d;
+        background: rgba(127, 29, 29, 0.2);
+    }
+
+    button.danger:hover {
+        background: rgba(153, 27, 27, 0.35);
+        border-color: #ef4444;
+    }
+
+    .filter-info {
+        color: var(--muted);
+        margin: 8px 0 18px;
+        font-size: 13.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Chapter Cards */
+    .chapter {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        margin-bottom: 18px;
+        overflow: hidden;
+    }
+
+    .chapter-header {
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        cursor: pointer;
+        background: var(--panel2);
+        user-select: none;
+        transition: background 0.2s;
+    }
+
+    .chapter-header:hover {
+        background: #1c2942;
+    }
+
+    .chapter-header h3 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #f1f5f9;
+    }
+
+    .chapter-header p {
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .chapter-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .chapter-progress {
+        color: var(--green);
+        background: var(--green-bg);
+        border: 1px solid rgba(52, 211, 153, 0.28);
+        padding: 5px 11px;
+        border-radius: 20px;
+        font-size: 12.5px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .chapter-chevron {
+        color: var(--muted);
+        font-size: 13px;
+        transition: transform 0.25s ease;
+    }
+
+    .chapter.collapsed .chapter-chevron {
+        transform: rotate(-90deg);
+    }
+
+    .questions {
+        padding: 6px 20px 16px;
+    }
+
+    /* Question Items */
+    .question {
+        padding: 16px 12px;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.2s;
+        border-radius: 10px;
+    }
+
+    .question:last-child {
+        border-bottom: none;
+    }
+
+    .question:hover {
+        background: rgba(129, 140, 248, 0.035);
+    }
+
+    .question-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .question-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .question.completed .question-text {
+        text-decoration: line-through;
+        color: var(--green);
+        opacity: 0.85;
+    }
+
+    .question input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 21px;
+        height: 21px;
+        min-width: 21px;
+        border: 2px solid #64748b;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 2px;
+        transition: all 0.2s ease;
+        background: #0b1220;
+    }
+
+    .question input[type="checkbox"]:hover {
+        border-color: var(--green);
+    }
+
+    .question input[type="checkbox"]:checked {
+        background: #10b981;
+        border-color: #10b981;
+        position: relative;
+    }
+
+    .question input[type="checkbox"]:checked::after {
+        content: "✓";
+        color: white;
+        position: absolute;
+        left: 3.5px;
+        top: -1.5px;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .question-text {
+        line-height: 1.65;
+        font-size: 14.5px;
+        font-weight: 500;
+        cursor: pointer;
+        color: #eef4fc;
+        transition: color 0.15s;
+        word-break: break-word;
+    }
+
+    .question-text:hover {
+        color: #c7d2fe;
+    }
+
+    .q-number {
+        color: var(--accent);
+        font-weight: 700;
+        margin-right: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13.5px;
+    }
+
+    .toggle-answer-btn {
+        padding: 7px 12px;
+        font-size: 12.5px;
+        border-radius: 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        background: #162238;
+        border-color: #2b3c59;
+        color: #cbd5e1;
+    }
+
+    .toggle-answer-btn.open {
+        background: rgba(129, 140, 248, 0.16);
+        border-color: var(--accent);
+        color: #e0e7ff;
+    }
+
+    /* Collapsible Answer Panel */
+    .answer-box {
+        margin-top: 14px;
+        margin-left: 35px;
+        background: var(--panel3);
+        border: 1px solid #22314d;
+        border-left: 3px solid var(--accent);
+        border-radius: 12px;
+        padding: 16px 18px;
+        animation: fadeInSlide 0.2s ease-out;
+    }
+
+    @keyframes fadeInSlide {
+        from {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .answer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(37, 51, 75, 0.7);
+        flex-wrap: wrap;
+    }
+
+    .verified-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--green);
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+        padding: 3px 9px;
+        border-radius: 999px;
+        letter-spacing: 0.02em;
+    }
+
+    .topic-tag {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-weight: 500;
+    }
+
+    .answer-body {
+        font-size: 14px;
+        color: #d6e2f3;
+        line-height: 1.72;
+    }
+
+    .answer-body p {
+        margin-bottom: 10px;
+    }
+
+    .answer-body p:last-child {
+        margin-bottom: 0;
+    }
+
+    .answer-body strong {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .answer-body ul {
+        margin: 8px 0 10px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .answer-body li {
+        color: #d6e2f3;
+    }
+
+    .answer-body code.inline-code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        background: rgba(129, 140, 248, 0.14);
+        color: #c7d2fe;
+        padding: 2px 6px;
+        border-radius: 5px;
+        border: 1px solid rgba(129, 140, 248, 0.22);
+    }
+
+    /* Syntax-Styled C++ Code Block */
+    .code-wrap {
+        margin: 12px 0 6px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #24334f;
+        background: #070d19;
+    }
+
+    .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 12px;
+        background: #10192c;
+        border-bottom: 1px solid #1e2c46;
+        font-size: 11.5px;
+        color: #94a3b8;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .copy-btn {
+        padding: 3px 9px;
+        font-size: 11px;
+        border-radius: 6px;
+        background: #18253f;
+        border: 1px solid #2d4066;
+        color: #cbd5e1;
+    }
+
+    .copy-btn:hover {
+        border-color: var(--accent);
+        color: #fff;
+    }
+
+    .code-wrap pre {
+        padding: 13px 15px;
+        overflow-x: auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.8px;
+        line-height: 1.6;
+        color: #e2e8f0;
+        margin: 0;
+    }
+
+    .hl-kw { color: #c084fc; font-weight: 500; }
+    .hl-type { color: #38bdf8; }
+    .hl-str { color: #34d399; }
+    .hl-com { color: #64748b; font-style: italic; }
+    .hl-num { color: #fbbf24; }
+
+    .empty {
+        text-align: center;
+        padding: 46px 20px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        color: var(--muted);
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 34px;
+        line-height: 1.8;
+    }
+
+    /* Custom Modal (Replaces confirm() cleanly) */
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 9, 18, 0.78);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 1000;
+    }
+
+    .modal-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        max-width: 420px;
+        width: 100%;
+        padding: 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #f8fafc;
+    }
+
+    .modal-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* Toast Notification */
+    .toast {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        background: #172238;
+        border: 1px solid var(--accent);
+        color: #f1f5f9;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-size: 13.5px;
+        font-weight: 500;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        z-index: 1100;
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (max-width: 680px) {
+        body {
+            padding: 15px 10px 45px;
+        }
+
+        .hero {
+            padding: 22px 18px;
+        }
+
+        .chapter-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
+        }
+
+        .questions {
+            padding: 6px 10px 14px;
+        }
+
+        .question-top {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toggle-answer-btn {
+            margin-left: 35px;
+            align-self: flex-start;
+        }
+
+        .answer-box {
+            margin-left: 0;
+            padding: 14px;
+        }
+
+        .toolbar-row button {
+            flex: 1 1 auto;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <section class="hero">
+        <span class="badge">C++ PLACEMENT PREPARATION</span>
+        <h1>OOP Interview Question Bank &amp; Complete Answer Guide</h1>
+        <p>
+            Your complete 200-question C++ Object-Oriented Programming study &amp; revision tracker.
+            Verify concepts with 100% technically accurate C++ answers, inspect real code examples,
+            and track your placement readiness automatically.
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <h2 id="totalCount">200</h2>
+            <p>Total Questions</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="completedCount">0</h2>
+            <p>Completed Questions</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="remainingCount">200</h2>
+            <p>Remaining Questions</p>
+        </div>
+
+        <div class="stat">
+            <h2 id="percentage">0%</h2>
+            <p>Overall Progress</p>
+        </div>
+    </section>
+
+    <section class="progress-section">
+        <div class="progress-header">
+            <h3>Overall Preparation Progress</h3>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p id="progressMessage">Start checking off questions as you master them.</p>
+    </section>
+
+    <section class="toolbar">
+        <div class="toolbar-row">
+            <div class="search-wrapper">
+                <input type="search" id="searchInput"
+                       placeholder="Search questions, answers, or C++ keywords (e.g., vtable, RAII, Rule of Five)...">
+            </div>
+
+            <button id="btnFilterAll" class="active-filter" onclick="filterQuestions('all')">All</button>
+            <button id="btnFilterCompleted" onclick="filterQuestions('completed')">Completed</button>
+            <button id="btnFilterRemaining" onclick="filterQuestions('remaining')">Remaining</button>
+        </div>
+
+        <div class="toolbar-row">
+            <button class="accent-btn" onclick="expandAllAnswers()">Expand All Answers</button>
+            <button class="accent-btn" onclick="collapseAllAnswers()">Collapse All Answers</button>
+            <button onclick="markVisible()">Mark Visible</button>
+            <button onclick="unmarkVisible()">Unmark Visible</button>
+            <button class="danger" onclick="openResetModal()">Reset</button>
+        </div>
+    </section>
+
+    <div class="filter-info">
+        <span id="filterInfo">Showing all 200 questions across 12 topics.</span>
+        <span>Tip: Click any question text or "Show Answer" to toggle its explanation.</span>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="footer">
+        <p><strong>C++ OOP Interview Preparation Tracker &amp; Answer Guide</strong></p>
+        <p>All 200 questions verified against modern C++ standards · Progress auto-saved locally in your browser.</p>
+    </div>
+
+</div>
+
+<!-- Custom Reset Confirmation Modal -->
+<div id="resetModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+    <div class="modal-card">
+        <h3 id="resetModalTitle">Reset All Progress?</h3>
+        <p>This will clear all 200 completion checkboxes stored in your browser. Your answers remain available anytime.</p>
+        <div class="modal-actions">
+            <button type="button" onclick="closeResetModal()">Cancel</button>
+            <button type="button" class="danger" onclick="confirmResetTracker()">Yes, Reset Progress</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Feedback -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+const chapters = [
+{
+title: "OOP Fundamentals",
+range: "Questions 1–15",
+items: [
+{
+q: "What is Object-Oriented Programming (OOP), and why is it used?",
+a: "**Object-Oriented Programming (OOP)** is a programming paradigm that organizes software around **objects**—self-contained units bundling data (state) and functions (behavior)—rather than standalone procedures.\n\n**Why it is used:**\n- Models complex real-world domains naturally.\n- Enforces data integrity through encapsulation and access control.\n- Improves modularity, code reuse, and maintainability in large-scale codebases."
+},
+{
+q: "What are the four pillars of OOP?",
+a: "The four foundational pillars of OOP are:\n- **1. Encapsulation:** Bundling data members and member functions inside a class while restricting direct external access.\n- **2. Abstraction:** Exposing clean, high-level interfaces while hiding low-level implementation details.\n- **3. Inheritance:** Deriving new classes from existing ones to express an **\"is-a\"** relationship and reuse/extend behavior.\n- **4. Polymorphism:** Allowing a single interface, function name, or base pointer/reference to represent multiple underlying types at compile time or runtime."
+},
+{
+q: "How does OOP differ from procedural programming?",
+a: "**Procedural Programming** separates data structures from the functions that manipulate them, following a top-down control flow where shared data is vulnerable to unintended modification.\n\n**OOP** binds data and operations together into cohesive objects with strict access modifiers (`private`, `protected`, `public`), enabling data hiding, inheritance, and polymorphic dispatch."
+},
+{
+q: "What is the difference between a class and an object?",
+a: "- **Class:** A user-defined blueprint or type definition (`class Car { ... };`). It is a compile-time construct that occupies **zero object memory** on its own.\n- **Object:** A concrete runtime instance of a class (`Car myCar;`) allocated in memory (stack, heap, or static storage) with its own independent state."
+},
+{
+q: "What are state, behavior and identity of an object?",
+a: "Every object is characterized by three properties:\n- **State:** The current values stored in its non-static data members.\n- **Behavior:** The set of operations (member functions) the object exposes to act upon its state.\n- **Identity:** The unique property (in C++, its memory address `&obj`) that distinguishes one object instance from another even when both hold identical state values."
+},
+{
+q: "What are the advantages and limitations of OOP?",
+a: "**Advantages:**\n- Strong modularity and clear subsystem boundaries.\n- Data safety through encapsulation and class invariants.\n- Extensibility via polymorphism (Open/Closed Principle).\n\n**Limitations:**\n- Higher upfront architectural and boilerplate overhead.\n- Runtime cost from dynamic dispatch (`vptr`/`vtable` indirection) and heap allocations.\n- Lower CPU cache locality compared to **Data-Oriented Design (DOD)** in tight performance-critical loops."
+},
+{
+q: "What is the difference between abstraction and encapsulation?",
+a: "- **Abstraction** focuses on **what** an object does—exposing an essential external contract while hiding implementation complexity.\n- **Encapsulation** focuses on **how** state and behavior are packaged together and protected using access specifiers (`private`/`protected`) so external callers cannot break internal invariants."
+},
+{
+q: "What is the difference between encapsulation and data hiding?",
+a: "- **Encapsulation** is the structural bundling of data members and member functions into a single class unit.\n- **Data Hiding** is specifically restricting external visibility of internal state (via `private` or `protected`) so outside code cannot read or corrupt raw fields directly."
+},
+{
+q: "Can C++ be used without OOP?",
+a: "**Yes.** C++ is a multi-paradigm language. You can write pure procedural C-style programs, generic template/STL code, or modern functional-style C++ using lambdas and `std::ranges` without defining a single `class`."
+},
+{
+q: "Why is OOP useful in large-scale software development?",
+a: "OOP enforces explicit module boundaries through interfaces, isolates internal data representations so teams can modify implementations independently without breaking callers, and allows adding new feature variants via polymorphism without altering existing tested code."
+},
+{
+q: "How does OOP improve code reusability?",
+a: "OOP enables reuse through:\n- **Composition (\"has-a\"):** Embedding existing tested classes as member objects.\n- **Inheritance (\"is-a\"):** Extending base classes with specialized behavior.\n- **Polymorphic Interfaces:** Writing algorithms once against a base interface so they work seamlessly across all current and future implementations."
+},
+{
+q: "How does OOP improve maintainability?",
+a: "Because internal state is hidden behind a stable public interface, bug fixes, performance optimizations, or data-structure changes remain localized inside a single class without cascading edits across dependent modules."
+},
+{
+q: "What is modularity in OOP?",
+a: "**Modularity** is decomposing a complex system into discrete, cohesive, and loosely coupled classes or components, where each module encapsulates a single clear responsibility behind a well-defined interface."
+},
+{
+q: "Is OOP always better than procedural programming? Why?",
+a: "**No.** For small utility scripts, low-level embedded drivers, pure mathematical kernels, or cache-sensitive game/simulation loops (better served by Data-Oriented Design), procedural or generic programming is simpler, faster, and avoids unnecessary class hierarchy complexity."
+},
+{
+q: "How would you explain OOP using a real-world example?",
+a: "Consider a `Vehicle` system: a driver interacts only with steering and pedals (**Abstraction**), while fuel injection and ECU logic remain sealed inside the engine (**Encapsulation**). `ElectricCar` and `DieselCar` derive from `Vehicle` (**Inheritance**) and execute specialized logic when `refuel()` is called (**Polymorphism**).\n```cpp\nclass Vehicle {\npublic:\n    virtual void refuel() = 0;\n    virtual ~Vehicle() = default;\n};\nclass ElectricCar : public Vehicle {\npublic:\n    void refuel() override { /* charge battery */ }\n};\n```"
+}
+]
+},
+{
+title: "Classes, Objects & Memory",
+range: "Questions 16–30",
+items: [
+{
+q: "What is a class in C++?",
+a: "A `class` in C++ is a user-defined type that encapsulates data members, member functions, constructors, destructors, nested types, and access specifiers (`public`, `protected`, `private`) into a single logical blueprint."
+},
+{
+q: "What happens when an object of a class is created?",
+a: "When an object is instantiated, C++ performs these steps in exact order:\n- **1.** Allocates raw storage (on the stack, heap, or static data segment).\n- **2.** Initializes virtual base classes, then direct non-virtual base classes.\n- **3.** Initializes non-static data members in their **class declaration order**.\n- **4.** Sets the hidden `vptr` (if the class is polymorphic).\n- **5.** Executes the constructor body `{ ... }`."
+},
+{
+q: "What is the size of an empty class, and why?",
+a: "The size of a standalone empty class (`class Empty {};`) is **1 byte** (`sizeof(Empty) == 1`).\n\n**Why:** The C++ standard requires every distinct complete object to have a unique memory address (`&a != &b`). A size of `0` would place consecutive array elements at identical addresses. *(Note: Empty Base Optimization or `[[no_unique_address]]` allows an empty subobject inside another class to take 0 bytes.)*"
+},
+{
+q: "What is the difference between class and struct in C++?",
+a: "In C++, `class` and `struct` have identical capabilities (both support constructors, destructors, access specifiers, inheritance, templates, and virtual functions). Only **two** differences exist:\n- **Default member access:** `private` in `class` vs `public` in `struct`.\n- **Default base-class inheritance:** `private` in `class` vs `public` in `struct`."
+},
+{
+q: "What are access modifiers in C++?",
+a: "C++ provides three access specifiers:\n- **`public`:** Accessible from any code that can see the class.\n- **`protected`:** Accessible inside the class itself, derived classes, and `friend`s.\n- **`private`:** Accessible strictly inside the defining class and its declared `friend`s."
+},
+{
+q: "What is the default access modifier in a class and a struct?",
+a: "- In a **`class`**, default member access and default inheritance access are **`private`**.\n- In a **`struct`**, default member access and default inheritance access are **`public`**."
+},
+{
+q: "Can private members be accessed outside a class?",
+a: "Not directly by normal external functions or classes. External access is only permitted if the external function or class is explicitly declared as a **`friend`** inside the class definition."
+},
+{
+q: "Can a derived class access private members of its base class?",
+a: "**No**, not directly—unless the derived class is explicitly declared a `friend` of the base class. A derived class can only directly access `public` and `protected` members of its base class."
+},
+{
+q: "Does an object store its member functions inside its memory?",
+a: "**No.** Member functions are compiled once into the program's read-only code (text) segment and shared by all instances; each call implicitly receives the instance address via the `this` pointer. Only classes with `virtual` functions store a hidden `vptr` inside each object."
+},
+{
+q: "How is memory allocated to objects and class members?",
+a: "- **Non-static data members:** Allocated per object instance (with alignment padding) on the stack, heap, or static storage depending on how the object is created.\n- **`static` data members:** Allocated once in static/global memory for the entire program lifetime.\n- **Member functions:** Stored once in the executable code segment."
+},
+{
+q: "What is the difference between static and non-static data members?",
+a: "- **Non-static data members** belong to each individual object instance (`obj1.x` and `obj2.x` occupy distinct memory).\n- **`static` data members** belong to the class itself—only **one shared copy** exists across all instances, accessible via `ClassName::member`.\n```cpp\nclass Counter {\npublic:\n    static inline int total = 0; // shared across all objects\n    int id = ++total;              // per-instance member\n};\n```"
+},
+{
+q: "Can a class contain an object of another class?",
+a: "**Yes**—this is **composition** (`class Car { Engine engine_; };`). A class cannot contain a direct by-value instance of *itself* (because its size would be infinite / incomplete type), though it can hold a pointer or reference to its own type (`Node* next`)."
+},
+{
+q: "What is the difference between a stack object and a heap object in terms of object lifetime?",
+a: "- **Stack objects** have **automatic storage duration**: constructed at the point of definition and deterministically destroyed when control leaves their enclosing `{}` scope (foundation of RAII).\n- **Heap objects** (`new` / smart pointers) have **dynamic storage duration**: they survive across function scopes until explicitly destroyed via `delete` (or smart pointer destruction)."
+},
+{
+q: "Can multiple objects share the same member functions?",
+a: "**Yes.** All instances of a class share the exact same compiled machine instructions for member functions, operating on their own per-instance data via the implicit `this` pointer."
+},
+{
+q: "How would you design a class with properly restricted access to its data?",
+a: "Keep all data members `private`, establish valid invariants inside constructors, mark read-only inspection methods `const`, validate inputs before mutating state, and expose domain operations rather than blind setters.\n```cpp\nclass Temperature {\n    double kelvin_;\npublic:\n    explicit Temperature(double k) : kelvin_(k < 0.0 ? 0.0 : k) {}\n    double kelvin() const { return kelvin_; }\n    void setKelvin(double k) { if (k >= 0.0) kelvin_ = k; }\n};\n```"
+}
+]
+},
+{
+title: "Encapsulation & Abstraction",
+range: "Questions 31–45",
+items: [
+{
+q: "How do you implement encapsulation in C++?",
+a: "Encapsulation is implemented by grouping related data and methods inside a `class`, marking data members `private`, and exposing a cohesive `public` interface that enforces invariants on every state mutation."
+},
+{
+q: "Why are data members generally made private?",
+a: "Making data members `private` prevents external code from corrupting class invariants, decouples callers from internal data representations, and allows changing internal structures later without breaking client code."
+},
+{
+q: "Is encapsulation possible without getters and setters?",
+a: "**Yes—and often stronger!** Good OOP design favors domain-level behavioral methods (e.g., `order.ship()`) over mechanical getters/setters for every private field."
+},
+{
+q: "What is data hiding?",
+a: "**Data hiding** is concealing an object's internal data representation (via `private` members or the PIMPL idiom) so external code cannot directly read or modify raw internal state."
+},
+{
+q: "How does abstraction reduce complexity?",
+a: "Abstraction exposes a clean, high-level contract (such as a header API) while hiding low-level algorithmic or hardware details, letting developers reason about *what* a component does without tracking *how* it works internally."
+},
+{
+q: "Can abstraction be achieved without abstract classes?",
+a: "**Yes.** Any well-encapsulated class interface, free-function API, C++20 `concept`, or PIMPL wrapper provides abstraction without needing `virtual` functions or abstract base classes."
+},
+{
+q: "Give a real-world example of abstraction in software.",
+a: "`std::sort(begin, end)` or `std::ofstream::write()`: callers invoke a concise, predictable interface without needing to understand introsort pivot selection or OS kernel file-buffer syscalls."
+},
+{
+q: "Give a real-world example of encapsulation.",
+a: "`std::vector<T>`: it keeps its internal heap pointer, `size`, and `capacity` strictly `private`, exposing `push_back()`, `pop_back()`, and `size()` so callers can never desynchronize size from allocated capacity."
+},
+{
+q: "What is the difference between abstraction and implementation?",
+a: "- **Abstraction** is the public interface/contract defining **what** operations are supported and their guarantees.\n- **Implementation** is the private code and data structures defining **how** those operations execute."
+},
+{
+q: "How does encapsulation protect an object's state?",
+a: "By forbidding direct external writes and channeling all state transitions through controlled member functions that validate preconditions before updating private variables."
+},
+{
+q: "What are class invariants?",
+a: "**Class invariants** are logical conditions about an object's state that must hold true immediately after construction and before and after every public member function call (e.g., `balance_ >= 0` or `size_ <= capacity_`)."
+},
+{
+q: "How do you ensure an object always remains in a valid state?",
+a: "- Keep all data members `private`.\n- Validate arguments in constructors (throwing an exception if invalid so half-baked objects never exist).\n- Validate mutations in member functions and wrap resources with RAII."
+},
+{
+q: "Can getters and setters themselves violate encapsulation?",
+a: "**Yes.** Blindly providing `getX()` and `setX()` for every private variable exposes internal data representation and pushes business-rule enforcement onto external callers."
+},
+{
+q: "How would you design a secure BankAccount class?",
+a: "Make `balance_` and `id_` `private`, validate initial deposit in the constructor, expose controlled `deposit()` and `withdraw()` methods with precondition checks, and mark `balance() const` read-only.\n```cpp\nclass BankAccount {\n    std::string id_;\n    double balance_;\npublic:\n    BankAccount(std::string id, double initial)\n        : id_(std::move(id)), balance_(initial >= 0 ? initial : throw std::invalid_argument(\"Negative balance\")) {}\n    void deposit(double amt) { if (amt > 0) balance_ += amt; }\n    bool withdraw(double amt) {\n        if (amt <= 0 || amt > balance_) return false;\n        balance_ -= amt;\n        return true;\n    }\n    double balance() const { return balance_; }\n};\n```"
+},
+{
+q: "What is the difference between exposing data and exposing behavior?",
+a: "- **Exposing data (\"Ask, don't tell\"):** Callers pull internal fields out, compute logic externally, and write modified fields back—scattering invariants across the codebase.\n- **Exposing behavior (\"Tell, don't ask\"):** Callers tell the object what domain action to perform (`account.withdraw(50)`), keeping rules encapsulated inside the class."
+}
+]
+},
+{
+title: "Constructors",
+range: "Questions 46–65",
+items: [
+{
+q: "What is a constructor in C++?",
+a: "A **constructor** is a special member function sharing the exact name of its class and having **no return type**, invoked automatically when an object is instantiated to initialize members and establish class invariants."
+},
+{
+q: "What are the different types of constructors?",
+a: "C++ constructors include:\n- **Default constructor:** Callable with zero arguments.\n- **Parameterized constructor:** Accepts one or more initialization arguments.\n- **Copy constructor:** `T(const T&)` constructs from an existing lvalue/const object.\n- **Move constructor (C++11):** `T(T&&) noexcept` transfers resources from an rvalue.\n- **Delegating constructor (C++11):** Forwards initialization to another constructor of the same class.\n- **Converting constructor:** Non-`explicit` constructor callable with a single argument."
+},
+{
+q: "What is a default constructor?",
+a: "A constructor that can be called with **zero arguments**—either because its parameter list is empty (`Box()`) or because every parameter has a default argument (`Box(int w = 1, int h = 1)`)."
+},
+{
+q: "What is a parameterized constructor?",
+a: "A constructor accepting one or more arguments so an object can be initialized directly with caller-supplied values (`Point(int x, int y)`)."
+},
+{
+q: "What is a copy constructor?",
+a: "A constructor with signature `ClassName(const ClassName& other)` that initializes a new object as a copy of an existing object of the same type."
+},
+{
+q: "What is constructor overloading?",
+a: "Defining multiple constructors within the same class having distinct parameter lists (different number, types, or order of parameters) to allow constructing objects in multiple ways."
+},
+{
+q: "Can a constructor be virtual?",
+a: "**No.** Constructing an object requires knowing its exact concrete type at compile time to allocate the right memory size and set up its `vptr`. Before the constructor runs, the object has no `vtable`."
+},
+{
+q: "Can a constructor be private?",
+a: "**Yes.** Private constructors are used in the **Singleton** pattern, **Named Constructor / static factory** idioms (e.g., `Point::fromPolar(r, theta)`), or when only `friend` classes may instantiate the class."
+},
+{
+q: "What is a constructor initializer list?",
+a: "The colon-prefixed list `: member1(val1), member2(val2)` between the constructor header and `{}` body that directly initializes base classes and non-static data members before the constructor body executes."
+},
+{
+q: "Why is an initializer list sometimes mandatory?",
+a: "An initializer list is **mandatory** for:\n- `const` data members.\n- Reference (`&`) data members.\n- Member objects whose class has no default constructor.\n- Base classes lacking a default constructor.\n```cpp\nclass RefHolder {\n    const int id_;\n    int& ref_;\npublic:\n    RefHolder(int id, int& r) : id_(id), ref_(r) {} // mandatory\n};\n```"
+},
+{
+q: "What is the difference between initialization and assignment?",
+a: "- **Initialization** constructs an object with its starting value in a single step (`std::string s(\"hello\");`).\n- **Assignment** overwrites an already-constructed object (`s = \"hello\";`). In a constructor body, assigning means default-constructing first and then assigning."
+},
+{
+q: "What is the order of initialization of data members?",
+a: "C++ always initializes subobjects in this strict order:\n- **1.** Virtual base classes.\n- **2.** Direct non-virtual base classes (left to right).\n- **3.** Non-static data members in their **exact declaration order inside the class** (NOT the order listed in the initializer list)."
+},
+{
+q: "Does the order of members in the initializer list matter?",
+a: "**No** for runtime execution order—the compiler always initializes members in class-declaration order (so destruction occurs in exact reverse order). Misordering the initializer list triggers `-Wreorder` warnings and causes subtle bugs if one member depends on another."
+},
+{
+q: "What happens if you initialize a member inside the constructor body instead of the initializer list?",
+a: "All non-static members are first **default-initialized** before `{}` begins, and then **copy/move-assigned** inside `{}`—wasting performance for non-trivial types (`std::string`, `std::vector`) and failing to compile for `const`, reference, or non-default-constructible members."
+},
+{
+q: "What is a delegating constructor?",
+a: "(C++11) A constructor that calls another constructor of the same class in its member initializer list to avoid duplicating initialization logic.\n```cpp\nclass Rect {\n    int w_, h_;\npublic:\n    Rect(int w, int h) : w_(w), h_(h) {}\n    Rect() : Rect(1, 1) {} // delegates to Rect(int, int)\n};\n```"
+},
+{
+q: "What is an explicit constructor?",
+a: "A constructor marked `explicit` so it can only be invoked via direct initialization (`Buffer b(10);`, `Buffer b{10};`) and cannot participate in implicit conversions or copy-initialization (`Buffer b = 10;` is rejected)."
+},
+{
+q: "How does explicit prevent unwanted implicit conversions?",
+a: "Without `explicit`, a single-argument constructor acts as an implicit conversion operator—passing `10` to `void process(Buffer b)` silently creates a temporary `Buffer(10)`. Marking the constructor `explicit` catches such accidental conversions at compile time."
+},
+{
+q: "Can a constructor call another constructor of the same class?",
+a: "**Yes**, via **constructor delegation** in the member initializer list (`Foo() : Foo(0) {}`). Writing `Foo(0);` inside the constructor *body* does **not** initialize `*this`—it merely constructs and immediately destroys an unrelated temporary local object!"
+},
+{
+q: "What happens if a constructor throws an exception?",
+a: "Construction fails and the object never finishes coming into existence:\n- Destructors for all already-constructed base classes and member subobjects execute automatically in reverse order (preventing leaks under RAII).\n- The class's own destructor does **not** run.\n- The exception propagates out to the caller."
+},
+{
+q: "What is the difference between default initialization, value initialization and zero initialization of objects?",
+a: "- **Default initialization (`T x;`):** Calls default constructor for class types; leaves built-in/scalar stack variables uninitialized (indeterminate).\n- **Value initialization (`T x{};` or `T()`):** Zero-initializes first if there is no user-provided default constructor, then runs default constructor (zeroing built-in fields).\n- **Zero initialization (`static T x;`):** Sets all scalar bytes to `0` prior to any dynamic initialization."
+}
+]
+},
+{
+title: "Copying & Assignment",
+range: "Questions 66–85",
+items: [
+{
+q: "When is a copy constructor called?",
+a: "A copy constructor is invoked when:\n- Constructing a new object from an existing one (`T b = a;`, `T b(a);`, `T b{a};`).\n- Passing an object **by value** to a function.\n- Returning an object **by value** when copy elision (RVO/NRVO) does not occur."
+},
+{
+q: "What is shallow copying?",
+a: "**Shallow copying** performs a member-by-member bitwise/value copy where pointer members copy only the **memory address**, causing both the source and copied objects to point to the exact same underlying resource."
+},
+{
+q: "What is deep copying?",
+a: "**Deep copying** allocates independent memory/resources for the new object and duplicates the underlying pointed-to contents so mutations or destruction in one object never affect the other."
+},
+{
+q: "What problem can shallow copy cause when a class owns dynamic memory?",
+a: "When two objects share the same raw pointer:\n- **Double free (Undefined Behavior):** Both destructors call `delete` on the same address.\n- **Dangling pointer:** Destroying one object invalidates the pointer held by the survivor.\n- **Unintended aliasing:** Mutating data through one object silently mutates the other."
+},
+{
+q: "Why should a copy constructor generally accept a const reference?",
+a: "- Taking by **reference (`&`)** avoids infinite recursive copying.\n- Marking it **`const`** guarantees the source object is not altered and allows copying from both `const` objects and temporary rvalues."
+},
+{
+q: "What happens if a copy constructor takes its argument by value?",
+a: "It causes **infinite recursion**: calling `T(T other)` requires copying `other` by value, which calls `T(T other)` again endlessly. The C++ compiler rejects `T(T)` as an ill-formed constructor signature."
+},
+{
+q: "What is the difference between `A b = a;` and `b = a;`?",
+a: "- `A b = a;` is **copy-initialization**: it constructs a brand-new object `b` by invoking the **copy constructor**.\n- `b = a;` is **copy assignment**: `b` already exists, so it invokes `b.operator=(a)` (the **copy assignment operator**)."
+},
+{
+q: "How do you implement deep copying?",
+a: "Implement a custom **copy constructor** that allocates fresh storage and copies elements, a **copy assignment operator** (ideally using copy-and-swap) that releases old memory and copies new data, and a **destructor** that frees the memory."
+},
+{
+q: "What is copy elision?",
+a: "**Copy elision** is an optimization where the compiler constructs an object directly in the caller's target memory, eliminating temporary copy/move calls (RVO/NRVO). Since **C++17**, prvalue copy elision is **guaranteed by the standard** even when copy/move constructors are deleted."
+},
+{
+q: "What is the difference between copying an object and sharing its resources?",
+a: "- **Copying** creates an independent duplicate with exclusive ownership (value semantics).\n- **Sharing** (e.g., via `std::shared_ptr`) shares a single underlying resource across multiple handles using thread-safe atomic reference counting."
+},
+{
+q: "What is a copy assignment operator?",
+a: "A special member function `T& operator=(const T& rhs)` that replaces the state of an already-constructed object with a copy of `rhs`, properly releasing any previously held resources."
+},
+{
+q: "What is the difference between a copy constructor and copy assignment operator?",
+a: "- **Copy constructor:** Initializes raw uninitialized memory to create a **new** object (no prior resources to release).\n- **Copy assignment operator:** Overwrites an **existing** object (must safely free old resources and handle self-assignment)."
+},
+{
+q: "What is self-assignment?",
+a: "**Self-assignment** occurs when an object is assigned to itself (`a = a;` or `*p1 = *p2;` where `p1 == p2`). If `operator=` deletes `this->data` before copying `rhs.data`, it destroys its own data first—causing undefined behavior unless guarded (`if (this == &rhs) return *this;` or copy-and-swap)."
+},
+{
+q: "Why should a copy assignment operator return a reference to the object?",
+a: "Returning `T&` (`return *this;`) supports chained assignments (`a = b = c;`), matches built-in type semantics, and avoids making an unnecessary temporary copy."
+},
+{
+q: "What happens if the compiler-generated copy operations copy a pointer?",
+a: "The implicitly synthesized copy constructor and copy assignment operator copy only the pointer's stored address (**shallow copy**), leaving both objects pointing to the same heap block."
+},
+{
+q: "What is the Rule of Three?",
+a: "If a class requires a user-defined **destructor**, **copy constructor**, or **copy assignment operator** (because it directly manages a raw resource), it almost certainly needs **all three** to prevent memory leaks and double frees."
+},
+{
+q: "What is the Rule of Five?",
+a: "In **C++11+**, declaring/defining/deleting any Rule of Three function suppresses implicit move operations. Therefore, if you manage a resource manually, explicitly define, `= default`, or `= delete` all five: **destructor**, **copy constructor**, **copy assignment**, **move constructor**, and **move assignment**."
+},
+{
+q: "What is the Rule of Zero?",
+a: "Prefer classes that do **not** manually manage raw resources—use standard RAII wrappers (`std::unique_ptr`, `std::vector`, `std::string`) for members so compiler-generated special member functions work safely out of the box and you write **zero** custom copy/move/destructor functions."
+},
+{
+q: "How can you make a class non-copyable?",
+a: "Explicitly mark both the copy constructor and copy assignment operator as `= delete`:\n```cpp\nclass NonCopyable {\npublic:\n    NonCopyable() = default;\n    NonCopyable(const NonCopyable&) = delete;\n    NonCopyable& operator=(const NonCopyable&) = delete;\n};\n```"
+},
+{
+q: "How would you safely implement copying and assignment for a class that owns dynamic memory?",
+a: "Use the **Copy-and-Swap Idiom**, which provides strong exception safety and handles self-assignment automatically:\n```cpp\nclass IntBuffer {\n    std::size_t size_;\n    int* data_;\npublic:\n    explicit IntBuffer(std::size_t n) : size_(n), data_(new int[n]{}) {}\n    ~IntBuffer() { delete[] data_; }\n\n    IntBuffer(const IntBuffer& other) : size_(other.size_), data_(new int[other.size_]) {\n        std::copy(other.data_, other.data_ + size_, data_);\n    }\n    friend void swap(IntBuffer& a, IntBuffer& b) noexcept {\n        std::swap(a.size_, b.size_);\n        std::swap(a.data_, b.data_);\n    }\n    IntBuffer& operator=(IntBuffer other) noexcept { // pass-by-value copies safely\n        swap(*this, other);\n        return *this;\n    }\n};\n```"
+}
+]
+},
+{
+title: "Destructors & Object Lifetime",
+range: "Questions 86–100",
+items: [
+{
+q: "What is a destructor?",
+a: "A **destructor** (`~ClassName()`) is a special member function with no parameters and no return type that executes automatically when an object's lifetime ends to release acquired resources."
+},
+{
+q: "When is a destructor called?",
+a: "A destructor runs automatically when:\n- An automatic (stack) object exits its enclosing scope.\n- `delete` is called on a dynamically allocated object.\n- A temporary object reaches the end of its full-expression.\n- Program termination destroys static/global objects.\n- An owning container or enclosing object is destroyed."
+},
+{
+q: "Can destructors be overloaded?",
+a: "**No.** Because destructors take zero parameters and have no return type, a class can have at most **one** destructor."
+},
+{
+q: "Can a destructor be virtual?",
+a: "**Yes.** Any base class intended for polymorphic deletion (`delete basePtr;`) must declare its destructor `virtual`."
+},
+{
+q: "Why is a virtual destructor important?",
+a: "If you `delete` a `Derived` object through a `Base*` pointer when `~Base()` is non-virtual, C++ invokes **undefined behavior** (typically skipping `~Derived()` and leaking derived resources). A `virtual` destructor dispatches dynamically so `~Derived()` runs first, followed by `~Base()`.\n```cpp\nclass Base {\npublic:\n    virtual ~Base() = default; // essential for polymorphic deletion\n};\n```"
+},
+{
+q: "What is RAII?",
+a: "**RAII (Resource Acquisition Is Initialization)** ties resource ownership (heap memory, file handles, mutexes, sockets) to an object's stack lifetime: acquired in the constructor and deterministically released in the destructor—even if an exception unwinds the stack."
+},
+{
+q: "What is stack unwinding?",
+a: "When an exception is thrown, C++ exits active function frames in reverse order until finding a matching `catch` block, automatically calling destructors for all local automatic objects constructed in those frames."
+},
+{
+q: "What happens if a destructor throws an exception?",
+a: "Since **C++11**, destructors are implicitly `noexcept(true)`. If an exception escapes a destructor, `std::terminate()` is called immediately—preventing crashes caused by throwing a second exception during stack unwinding."
+},
+{
+q: "What is the destruction order of objects?",
+a: "- **Local automatic objects** in the same scope are destroyed in **exact reverse order of construction** (LIFO).\n- **Static/global objects** are destroyed at program exit in reverse order of their construction completion."
+},
+{
+q: "What is the construction and destruction order in inheritance?",
+a: "- **Construction:** Virtual bases $\\rightarrow$ direct non-virtual bases (declaration order) $\\rightarrow$ non-static data members (declaration order) $\\rightarrow$ derived constructor body.\n- **Destruction (exact reverse):** Derived destructor body $\\rightarrow$ members (reverse declaration order) $\\rightarrow$ non-virtual bases (reverse order) $\\rightarrow$ virtual bases."
+},
+{
+q: "When is an object destroyed in a nested scope?",
+a: "Immediately when execution reaches the closing brace `}` of that inner block, before executing any subsequent statements in the outer block."
+},
+{
+q: "What happens when an object is created dynamically using new?",
+a: "`new T(args)` performs two steps: (1) allocates raw storage via `operator new`, and (2) constructs a `T` object in that memory, returning a `T*` pointer. The object remains alive on the heap until `delete` is called."
+},
+{
+q: "What happens when delete is called on an object?",
+a: "`delete ptr` performs two steps: (1) invokes the object's destructor (`~T()`), and (2) releases the underlying memory block via `operator delete`. *(Note: `delete nullptr` is guaranteed to be a safe no-op.)*"
+},
+{
+q: "Why is resource management important in destructors?",
+a: "Deterministic cleanup in destructors ensures memory, file descriptors, locks, and sockets are never leaked or left locked, regardless of early returns or thrown exceptions."
+},
+{
+q: "How can improper object lifetime management cause bugs in OOP?",
+a: "- Returning pointers/references to destroyed stack objects causes **dangling references / use-after-free**.\n- Forgetting `delete` causes **memory/resource leaks**.\n- Calling `delete` twice causes **double-free heap corruption**.\n- Omitting `virtual` on a polymorphic base destructor causes **undefined behavior** on deletion."
+}
+]
+},
+{
+title: "Inheritance",
+range: "Questions 101–125",
+items: [
+{
+q: "What is inheritance in OOP?",
+a: "**Inheritance** allows a derived class to inherit data members and member functions from a base class, modeling an **\"is-a\"** relationship and enabling polymorphic substitution."
+},
+{
+q: "What are the different types of inheritance?",
+a: "C++ supports five inheritance patterns:\n- **Single:** `Derived` $\\rightarrow$ `Base`\n- **Multilevel:** `GrandChild` $\\rightarrow$ `Child` $\\rightarrow$ `Base`\n- **Multiple:** `Derived` $\\rightarrow$ `Base1, Base2`\n- **Hierarchical:** `Derived1, Derived2` $\\rightarrow$ `Base`\n- **Hybrid:** Combination of multiple and hierarchical inheritance (e.g., diamond hierarchy)."
+},
+{
+q: "What is the difference between public, protected and private inheritance?",
+a: "- **`public` inheritance (\"is-a\"):** Base `public` stays `public`; base `protected` stays `protected`.\n- **`protected` inheritance:** Base `public` and `protected` both become `protected` in derived.\n- **`private` inheritance (\"implemented-in-terms-of\"):** Base `public` and `protected` both become `private` in derived.\n*(In all three modes, base `private` members remain inaccessible directly.)*"
+},
+{
+q: "What is the difference between inheritance and composition?",
+a: "- **Inheritance** models **\"is-a\"** (compile-time white-box coupling to base internals).\n- **Composition** models **\"has-a\"** by embedding member objects (black-box encapsulation, loose coupling, runtime swappability)."
+},
+{
+q: "Can a derived class inherit constructors?",
+a: "**Yes** (since C++11), using `using Base::Base;` inside the derived class. Inherited constructors initialize base members; any derived data members should have default member initializers so they are not left uninitialized."
+},
+{
+q: "Can a derived class access private members of its base class?",
+a: "**No**, not directly—unless the derived class is explicitly declared a `friend` of the base class. Otherwise it must go through `protected` or `public` base methods."
+},
+{
+q: "What is single inheritance?",
+a: "A derived class inherits from exactly **one** base class (`class Car : public Vehicle {};`)."
+},
+{
+q: "What is multilevel inheritance?",
+a: "A chain of inheritance where a derived class acts as the base class for another class (`Animal` $\\rightarrow$ `Mammal` $\\rightarrow$ `Dog`)."
+},
+{
+q: "What is multiple inheritance?",
+a: "A single derived class inherits simultaneously from **two or more** base classes (`class SmartWatch : public Watch, public FitnessTracker {};`)."
+},
+{
+q: "What is hierarchical inheritance?",
+a: "Two or more derived classes inherit from a **single shared base class** (`Circle`, `Rectangle`, and `Triangle` all inherit from `Shape`)."
+},
+{
+q: "What is hybrid inheritance?",
+a: "Combining two or more inheritance forms in one hierarchy—most commonly hierarchical + multiple inheritance, which produces the **diamond structure**."
+},
+{
+q: "What is the diamond problem?",
+a: "When `B` and `C` both inherit from `A`, and `D` inherits from both `B` and `C`, `D` contains **two separate `A` subobjects**—causing duplicate base state and compiler ambiguity when accessing `A`'s members (`d.x` is ambiguous)."
+},
+{
+q: "How does virtual inheritance solve the diamond problem?",
+a: "Inheriting with the `virtual` keyword (`class B : virtual public A` and `class C : virtual public A`) instructs the compiler to share a **single `A` subobject** inside `D`, eliminating duplication and member ambiguity.\n```cpp\nstruct A { int val = 42; };\nstruct B : virtual A {};\nstruct C : virtual A {};\nstruct D : B, C {}; // contains only ONE shared A subobject\n```"
+},
+{
+q: "Which class initializes the virtual base class in a diamond hierarchy?",
+a: "The **most-derived class** (`D`) directly initializes the virtual base (`A`) in its constructor initializer list. Any calls to `A`'s constructor in intermediate classes (`B` and `C`) are bypassed when constructing `D`."
+},
+{
+q: "Can a derived class override a private virtual function of its base class?",
+a: "**Yes!** In C++, access control (`private`) and virtual overriding are orthogonal. Derived classes can override a `private virtual` function (commonly used in the **Non-Virtual Interface / NVI** pattern), though they cannot call `Base::func()` directly."
+},
+{
+q: "What is the difference between a base class and a derived class?",
+a: "- **Base class (superclass):** Defines shared state, common operations, and polymorphic interfaces.\n- **Derived class (subclass):** Inherits from the base class to specialize, override, or extend its behavior."
+},
+{
+q: "Can a derived class redefine a function without using virtual in the base class?",
+a: "**Yes** (function hiding), but it does **not** trigger polymorphism: calling the method through a `Base*` or `Base&` statically invokes `Base::func()`, completely ignoring `Derived::func()`."
+},
+{
+q: "What happens when a derived class defines a function with the same name but different parameters as its base class?",
+a: "It **hides** all base-class functions with that same name—C++ name lookup stops in the derived class scope before overload resolution occurs, so calls matching only the base parameter list fail to compile."
+},
+{
+q: "What is name hiding in inheritance?",
+a: "**Name hiding** is the C++ rule that any declaration of a name in a derived class hides all declarations of that same name in base classes, even if their function parameter types differ."
+},
+{
+q: "How can using Base::function prevent name hiding?",
+a: "Adding `using Base::function;` inside the derived class brings all base overloads into the derived scope so overload resolution considers both base and derived signatures.\n```cpp\nstruct Base { void log(int); };\nstruct Derived : Base {\n    using Base::log;       // unhides Base::log(int)\n    void log(double);\n};\n```"
+},
+{
+q: "Can a base class pointer point to a derived class object?",
+a: "**Yes** (when using `public` inheritance). This implicit conversion (`Base* p = &derivedObj;`) is called upcasting and enables runtime polymorphism."
+},
+{
+q: "Can a derived class object be converted into a base class object?",
+a: "Copying/assigning a `Derived` object by value to a `Base` object (`Base b = d;`) compiles, but causes **object slicing**—copying only the `Base` portion, stripping `Derived`-only members, and setting `b`'s dynamic type to `Base`."
+},
+{
+q: "What is upcasting?",
+a: "**Upcasting** is converting a `Derived*` or `Derived&` to `Base*` or `Base&`. For `public` inheritance, it is implicit and always type-safe."
+},
+{
+q: "What is downcasting?",
+a: "**Downcasting** is converting a `Base*` or `Base&` down to `Derived*` or `Derived&`. Because a `Base*` might not point to a `Derived`, use `dynamic_cast<Derived*>` (returns `nullptr` on failure for polymorphic classes) rather than unchecked `static_cast`."
+},
+{
+q: "When should inheritance be avoided in software design?",
+a: "Avoid inheritance when the relationship is **\"has-a\"** instead of true **\"is-a\"**, when Liskov Substitution Principle (LSP) would be violated, when you merely want code reuse without polymorphism, or when hierarchies become deep and fragile."
+}
+]
+},
+{
+title: "Polymorphism",
+range: "Questions 126–145",
+items: [
+{
+q: "What is polymorphism?",
+a: "**Polymorphism** (\"many forms\") is the ability of a single interface, function name, or base pointer/reference to represent and operate on different underlying types uniformly."
+},
+{
+q: "What are the types of polymorphism in C++?",
+a: "C++ supports two forms of polymorphism:\n- **Compile-time (static) polymorphism:** Function overloading, operator overloading, and templates/CRTP.\n- **Runtime (dynamic) polymorphism:** `virtual` functions invoked through base-class pointers or references."
+},
+{
+q: "What is compile-time polymorphism?",
+a: "Polymorphism resolved completely by the compiler via overload resolution or template instantiation, incurring **zero runtime dispatch overhead**."
+},
+{
+q: "What is runtime polymorphism?",
+a: "Polymorphism resolved at runtime based on the actual dynamic type of an object accessed via `Base*` or `Base&` using `virtual` functions."
+},
+{
+q: "What is function overloading?",
+a: "Defining multiple functions in the **same scope** with the same name but **different parameter lists** (differing in parameter count, types, or `const`/reference qualifiers)."
+},
+{
+q: "What is function overriding?",
+a: "Providing a specialized implementation in a derived class for a `virtual` function declared in a base class with a matching signature (marked with `override` for compile-time verification)."
+},
+{
+q: "What is the difference between overloading and overriding?",
+a: "- **Overloading:** Same scope, different parameter signatures, compile-time resolution, no `virtual` needed.\n- **Overriding:** Base vs derived scope, identical signature on a `virtual` function, runtime dynamic resolution."
+},
+{
+q: "What is a virtual function?",
+a: "A non-static member function declared with the `virtual` keyword in a base class that enables dynamic dispatch so the most-derived override executes when called via a base pointer or reference."
+},
+{
+q: "What is dynamic binding?",
+a: "**Dynamic binding** (late binding) resolves a function call at runtime based on the object's actual dynamic type (via `vptr` $\\rightarrow$ `vtable`) rather than the pointer/reference's static type."
+},
+{
+q: "What is static binding?",
+a: "**Static binding** (early binding) resolves a function call at compile time based strictly on the declared static type of the expression, pointer, or reference (used for all non-virtual calls)."
+},
+{
+q: "What is the difference between static and dynamic binding?",
+a: "- **Static binding** occurs at compile time (faster, eligible for function inlining, inflexible to runtime types).\n- **Dynamic binding** occurs at runtime via `vtable` lookup (slight pointer indirection, enables pluggable runtime extensibility)."
+},
+{
+q: "Can function overloading be achieved using different return types alone?",
+a: "**No.** Return types do not participate in overload resolution in C++ because callers are allowed to ignore return values, which would make calls ambiguous."
+},
+{
+q: "Can virtual functions be overloaded?",
+a: "**Yes.** A base class can declare multiple overloaded `virtual` functions with distinct parameter lists (though derived classes overriding one should add `using Base::func;` to prevent name hiding)."
+},
+{
+q: "Can virtual functions be overridden?",
+a: "**Yes**—overriding in derived classes is the primary purpose of `virtual` functions, unless the base function is explicitly marked `final`."
+},
+{
+q: "Can a virtual function be private?",
+a: "**Yes** (used in the Non-Virtual Interface / Template Method pattern). Derived classes can still override a `private virtual` function, even though only the base class and its friends can call it."
+},
+{
+q: "Can a static member function be virtual?",
+a: "**No.** `static` member functions belong to the class and have no `this` pointer, whereas virtual dispatch requires an object's `this->vptr`."
+},
+{
+q: "Can a friend function be virtual?",
+a: "**No.** A `friend` function is a non-member function; only non-static member functions can be declared `virtual`."
+},
+{
+q: "What is covariant return type?",
+a: "An overriding virtual function in `Derived` may return `Derived*` or `Derived&` instead of `Base*` or `Base&` (provided `Derived` publicly inherits from `Base`), commonly used for polymorphic `clone()` methods.\n```cpp\nstruct Base { virtual Base* clone() const = 0; virtual ~Base() = default; };\nstruct Derived : Base { Derived* clone() const override { return new Derived(*this); } };\n```"
+},
+{
+q: "How does polymorphism improve extensibility?",
+a: "Client code written against a base interface (`PaymentMethod*`) automatically works with newly added derived classes (`CryptoPayment`) without modifying or recompiling existing client logic (Open/Closed Principle)."
+},
+{
+q: "Give a real-world software example of runtime polymorphism.",
+a: "A game engine or UI renderer iterating over `std::vector<std::unique_ptr<Renderable>>`: calling `item->draw()` dynamically invokes `Sprite::draw()`, `Mesh::draw()`, or `ParticleEmitter::draw()`."
+}
+]
+},
+{
+title: "Virtual Functions & Abstract Classes",
+range: "Questions 146–165",
+items: [
+{
+q: "What is a pure virtual function?",
+a: "A virtual function declared with `= 0` (`virtual double area() const = 0;`) defining an interface contract that concrete derived classes are required to implement."
+},
+{
+q: "What is an abstract class?",
+a: "Any class containing or inheriting at least one unimplemented pure virtual function; it serves as an incomplete base contract and cannot be instantiated directly."
+},
+{
+q: "Can we create an object of an abstract class?",
+a: "**No**—attempting to instantiate an abstract class produces a compile-time error, though you can declare pointers (`Shape*`) and references (`Shape&`) bound to concrete derived objects."
+},
+{
+q: "Can an abstract class have constructors?",
+a: "**Yes.** Abstract classes often define constructors to initialize their own data members when a concrete derived class object is constructed."
+},
+{
+q: "Can an abstract class have normal member functions?",
+a: "**Yes.** Abstract classes frequently include non-virtual or default-implemented methods shared across all subclasses (e.g., Template Method pattern)."
+},
+{
+q: "Can an abstract class have data members?",
+a: "**Yes.** Unlike pure interfaces in Java/C#, C++ abstract classes can own member variables to share common state across derived classes."
+},
+{
+q: "What is an interface-like class in C++?",
+a: "C++ has no `interface` keyword; an interface is modeled as a class containing **only pure virtual functions**, a `virtual ~Interface() = default;` destructor, and **zero data members**.\n```cpp\nclass ISerializable {\npublic:\n    virtual std::string serialize() const = 0;\n    virtual ~ISerializable() = default;\n};\n```"
+},
+{
+q: "What is the difference between an abstract class and an interface-like class?",
+a: "- **Abstract class:** Can combine data members, constructors, and implemented methods alongside pure virtual functions.\n- **Interface-like class:** Defines purely `= 0` behavioral contracts and a virtual destructor with no state."
+},
+{
+q: "What is the role of the override keyword?",
+a: "(C++11) Placed on a derived method signature to force the compiler to verify that it actually overrides a base `virtual` function—catching typos, missing `const`, or mismatched argument types at compile time."
+},
+{
+q: "What is the role of the final keyword?",
+a: "(C++11) Applied to a virtual function (`void f() override final;`) to forbid further overriding in subclasses, or to a class (`class Leaf final`) to prohibit deriving from it."
+},
+{
+q: "What happens when a virtual function is called inside a constructor?",
+a: "It calls the **current class's own implementation** (never a derived override), because during base constructor execution the derived class subobject has not been constructed yet."
+},
+{
+q: "What happens when a virtual function is called inside a destructor?",
+a: "It calls the **current class's own implementation** (never a derived override), because by the time the base destructor runs, the derived subobject has already been destroyed."
+},
+{
+q: "What is a vtable?",
+a: "A compiler-generated per-class static lookup table of function pointers mapping each virtual function slot to the most-derived implementation for that class."
+},
+{
+q: "What is a vptr?",
+a: "A hidden pointer stored inside every polymorphic object instance pointing to its class's `vtable`, automatically updated as constructors and destructors execute."
+},
+{
+q: "Are vtables and vptrs guaranteed by the C++ standard?",
+a: "**No.** The C++ standard specifies only the *observable behavior* of dynamic dispatch, not its ABI layout—though all major compilers (GCC, Clang, MSVC) implement it via `vtable` and `vptr`."
+},
+{
+q: "Can a pure virtual function have a definition?",
+a: "**Yes.** You can provide an out-of-line definition (`void Base::f() { ... }`); the class stays abstract and derived classes must still override `f()`, though they can invoke `Base::f()` explicitly. *(Note: a pure virtual destructor **must** have a definition.)*"
+},
+{
+q: "Can an abstract class have a virtual destructor?",
+a: "**Yes**—and it **must** have a `virtual` destructor whenever derived objects may be deleted through a pointer to that abstract base class."
+},
+{
+q: "Can a derived class remain abstract?",
+a: "**Yes.** If a derived class leaves any inherited pure virtual function unimplemented (or declares a new one), that derived class also remains abstract."
+},
+{
+q: "What happens if a derived class does not implement a pure virtual function?",
+a: "The derived class inherits the unimplemented pure virtual function and therefore remains abstract itself—trying to instantiate it causes a compile-time error."
+},
+{
+q: "Why should polymorphic base classes generally have virtual destructors?",
+a: "Because deleting a derived object via a `Base*` pointer when `~Base()` is non-virtual results in **undefined behavior** and skips `~Derived()`, leaking derived resources."
+}
+]
+},
+{
+title: "Operator Overloading",
+range: "Questions 166–180",
+items: [
+{
+q: "What is operator overloading?",
+a: "**Operator overloading** allows defining custom behavior for existing C++ operators (`+`, `==`, `<<`, `[]`, `()`, etc.) when applied to user-defined types (`class`, `struct`, or `enum`)."
+},
+{
+q: "Why is operator overloading used?",
+a: "It makes domain types (`Complex`, `Matrix`, `BigInt`, smart pointers, iterators) expressive and readable while enabling seamless integration with STL containers and generic algorithms (e.g., `operator<` for `std::sort`)."
+},
+{
+q: "What are the rules and limitations of operator overloading?",
+a: "- You cannot invent new operator symbols.\n- You cannot alter operator precedence, associativity, or operand count (arity).\n- At least one operand must be a user-defined type (you cannot overload `int + int`)."
+},
+{
+q: "Can all C++ operators be overloaded?",
+a: "**No.** Operators that **cannot** be overloaded are:\n- `::` (scope resolution)\n- `.` (direct member access)\n- `.*` (pointer-to-member access)\n- `?:` (ternary conditional)\n- `sizeof`, `typeid`, `alignof`"
+},
+{
+q: "What is the difference between member and non-member operator overloading?",
+a: "- **Member operator:** Left-hand operand is implicitly `*this` (`a + b` $\\rightarrow$ `a.operator+(b)`), so implicit conversions cannot happen on the left operand.\n- **Non-member operator:** Both operands are explicit parameters (`operator+(a, b)`), enabling symmetric implicit conversions on either side."
+},
+{
+q: "When should an operator be overloaded as a friend function?",
+a: "When the left-hand operand is not an object of your class—most commonly stream I/O (`std::ostream& operator<<(std::ostream&, const T&)`) or symmetric binary math (`2.0 * vec`)."
+},
+{
+q: "How do you overload the binary + operator?",
+a: "Implement compound `+=` as a member and binary `+` as a non-member (or `friend`) returning a new value:\n```cpp\nclass Vec2 {\n    double x_, y_;\npublic:\n    Vec2(double x, double y) : x_(x), y_(y) {}\n    Vec2& operator+=(const Vec2& rhs) { x_ += rhs.x_; y_ += rhs.y_; return *this; }\n    friend Vec2 operator+(Vec2 lhs, const Vec2& rhs) { lhs += rhs; return lhs; }\n};\n```"
+},
+{
+q: "How do you overload the unary - operator?",
+a: "Implement it as a `const` member function taking no parameters and returning a negated copy without mutating `*this`:\n```cpp\nVec2 operator-() const { return Vec2(-x_, -y_); }\n```"
+},
+{
+q: "What is the difference between prefix and postfix increment overloading?",
+a: "- **Prefix (`++x`):** `T& operator++()` increments `*this` and returns `*this` by reference (no temporary copy).\n- **Postfix (`x++`):** `T operator++(int)` saves a copy of the old state, increments `*this`, and returns the old copy by value."
+},
+{
+q: "Why does postfix increment use a dummy int parameter?",
+a: "Purely as a syntactic signature tag so the compiler can distinguish `operator++(int)` (postfix `x++`) from `operator++()` (prefix `++x`)."
+},
+{
+q: "How do you overload comparison operators?",
+a: "Define `operator==` and `operator<` as `const` functions—or in **C++20**, default the three-way spaceship operator (`auto operator<=>(const T&) const = default;`) to auto-generate all six operators (`==, !=, <, <=, >, >=`)."
+},
+{
+q: "How do you overload the assignment operator?",
+a: "Overload `operator=` as a non-static member function returning `T&`, guarding against self-assignment and releasing old resources (preferably via the copy-and-swap idiom)."
+},
+{
+q: "Can the . operator be overloaded?",
+a: "**No.** The direct member access operator (`.`) cannot be overloaded in C++ (unlike pointer-dereference member access `->`, which *can* be overloaded in smart pointers and iterators)."
+},
+{
+q: "Can the :: operator be overloaded?",
+a: "**No.** Scope resolution (`::`) is a compile-time namespace/class lookup mechanism, not a runtime expression operator."
+},
+{
+q: "What are the important operator overloading mistakes interviewers expect you to identify?",
+a: "- Returning a reference to a local stack object from binary `+` (dangling reference).\n- Mutating `*this` inside `+` or unary `-`.\n- Forgetting `const` qualification on non-mutating operators (`==`, `+`, `<<`).\n- Omitting self-assignment safety in `operator=`.\n- Violating natural operator semantics (e.g., making `+` subtract)."
+}
+]
+},
+{
+title: "Advanced Class Concepts",
+range: "Questions 181–190",
+items: [
+{
+q: "What is the this pointer?",
+a: "`this` is an implicit, hidden prvalue pointer passed to every non-static member function holding the address of the calling object (`T* const this`, or `const T* const this` inside `const` member functions)."
+},
+{
+q: "Can this be used inside static member functions?",
+a: "**No.** `static` member functions belong to the class rather than any object instance, so there is no `this` pointer."
+},
+{
+q: "What are static member functions?",
+a: "Member functions marked `static` that belong to the class scope, can be invoked without an object (`ClassName::fn()`), and operate only on `static` members or explicitly passed arguments."
+},
+{
+q: "Can static member functions access non-static members directly?",
+a: "**No**—because they have no `this` pointer, they cannot access non-static members directly unless given an explicit object reference or pointer."
+},
+{
+q: "What is a friend function?",
+a: "A non-member function (or member of another class) declared with `friend` inside a class, granting it access to that class's `private` and `protected` members."
+},
+{
+q: "What is a friend class?",
+a: "A class declared with `friend class Helper;` inside `Target`, granting every member function of `Helper` access to `Target`'s `private` and `protected` members."
+},
+{
+q: "Does friendship get inherited?",
+a: "**No.** If `B` is a friend of `A`, a derived class `D` inheriting from `B` does **not** automatically become a friend of `A`."
+},
+{
+q: "Does friendship get transitive?",
+a: "**No.** If `A` declares `B` a friend and `B` declares `C` a friend, `C` is **not** a friend of `A` (\"a friend of my friend is not my friend\")."
+},
+{
+q: "What are const objects and const member functions?",
+a: "A `const` object cannot be mutated after initialization and can only call member functions marked `const` (`int size() const;`), which promise not to modify observable object state."
+},
+{
+q: "What is the difference between a const member function and a non-const member function?",
+a: "Inside a `const` member function, `this` has type `const T* const`, preventing mutation of non-`mutable` members and calls to non-`const` methods. A class can overload a method on `const` vs non-`const` (e.g., `T& operator[]` vs `const T& operator[] const`)."
+}
+]
+},
+{
+title: "Software Engineering OOP Design & Practice",
+range: "Questions 191–200",
+items: [
+{
+q: "What are the SOLID principles, and how do they improve object-oriented design?",
+a: "**SOLID** is a set of five object-oriented design principles that reduce coupling, improve testability, and keep systems extensible:\n- **S**ingle Responsibility Principle\n- **O**pen/Closed Principle\n- **L**iskov Substitution Principle\n- **I**nterface Segregation Principle\n- **D**ependency Inversion Principle"
+},
+{
+q: "What is the Single Responsibility Principle, and how would you identify its violation in a class?",
+a: "**SRP** states that a class should have **only one reason to change** (one cohesive responsibility).\n\n**Signs of violation:** A \"God class\" mixing domain calculations, SQL database persistence, network calls, and report formatting inside a single class."
+},
+{
+q: "What is the Open/Closed Principle, and how can polymorphism help implement it?",
+a: "**OCP** states that software entities should be **open for extension, but closed for modification**. Polymorphism lets you introduce new behaviors by adding new derived classes implementing an interface rather than editing existing `switch` / `if-else` chains."
+},
+{
+q: "What is the Liskov Substitution Principle, and how can inheritance violate it?",
+a: "**LSP** states that objects of a derived class must be substitutable for objects of their base class without breaking correctness or invariants.\n\n**Classic violation:** `Square` inheriting from `Rectangle` where `setWidth()` silently alters height, breaking `Rectangle`'s postcondition that width and height vary independently."
+},
+{
+q: "What is the Interface Segregation Principle?",
+a: "**ISP** states that no client should be forced to depend on methods it does not use—prefer small, role-specific interfaces (`IPrinter`, `IScanner`) over one bloated fat interface (`IMultiFunctionMachine`)."
+},
+{
+q: "What is the Dependency Inversion Principle?",
+a: "**DIP** states that high-level policy modules and low-level detail modules should both depend on **abstractions** (interfaces), typically injected via constructors rather than instantiating concrete classes directly."
+},
+{
+q: "What is the difference between association, aggregation and composition?",
+a: "- **Association:** General usage relationship with no ownership (`Teacher` $\\leftrightarrow$ `Student`).\n- **Aggregation:** Weak \"has-a\" whole-part relationship where parts can outlive the whole (`Department` holds non-owning pointers/references to `Employee`).\n- **Composition:** Strong \"owns-a\" relationship where the whole controls part lifetime (`House` owns `Room` by value or `std::unique_ptr`)."
+},
+{
+q: "Why is composition often preferred over inheritance?",
+a: "Composition avoids fragile white-box coupling to base internals, prevents deep inheritance hierarchies, allows swapping behaviors dynamically at runtime (Strategy pattern), and avoids multiple-inheritance complexity."
+},
+{
+q: "How would you design a Parking Lot using OOP?",
+a: "Decompose into cohesive domain abstractions:\n- `ParkingLot` (singleton/orchestrator managing floors & entry/exit)\n- `ParkingFloor` & `ParkingSpot` (typed for `Bike`, `Compact`, `Large`, `EV`)\n- `Vehicle` hierarchy (`Bike`, `Car`, `Truck`)\n- `Ticket` (ticket ID, spot ID, entry timestamp)\n- `PricingStrategy` interface (`HourlyPricing`, `FlatRatePricing`) injected via polymorphism."
+},
+{
+q: "How would you design a payment system supporting multiple payment methods using OOP and polymorphism?",
+a: "Define an abstract `PaymentMethod` interface and inject concrete strategies into `PaymentProcessor` (applying **DIP**, **OCP**, and **Runtime Polymorphism**):\n```cpp\nclass PaymentMethod {\npublic:\n    virtual bool pay(double amount) = 0;\n    virtual ~PaymentMethod() = default;\n};\n\nclass CreditCardPayment : public PaymentMethod {\npublic:\n    bool pay(double amount) override { /* process card */ return true; }\n};\n\nclass UPIPayment : public PaymentMethod {\npublic:\n    bool pay(double amount) override { /* process UPI */ return true; }\n};\n\nclass PaymentProcessor {\npublic:\n    bool checkout(PaymentMethod& method, double amount) {\n        return method.pay(amount);\n    }\n};\n```"
+}
+]
+}
+];
+
+const STORAGE_KEY = "cpp_oop_question_tracker_v1";
+
+let saved = {};
+try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+} catch {
+    saved = {};
+}
+
+let currentFilter = "all";
+let searchTerm = "";
+const openAnswers = new Set();
+const collapsedChapters = new Set();
+
+function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    updateStats();
+}
+
+function getQuestionId(chapterIndex, questionIndex) {
+    let id = 1;
+    for (let i = 0; i < chapterIndex; i++) {
+        id += chapters[i].items.length;
+    }
+    return id + questionIndex;
+}
+
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    }[char]));
+}
+
+function highlightCpp(rawCode) {
+    let code = escapeHTML(rawCode);
+
+    // Extract strings & comments first using placeholders so keyword regex never corrupts them
+    const tokens = [];
+    const storeToken = (cls, text) => {
+        const idx = tokens.length;
+        tokens.push(`<span class="${cls}">${text}</span>`);
+        return `___TOK_${idx}___`;
+    };
+
+    code = code.replace(/(\/\/[^\n]*)/g, m => storeToken("hl-com", m));
+    code = code.replace(/(&quot;(?:\\.|(?!&quot;)[^\\])*&quot;)/g, m => storeToken("hl-str", m));
+
+    // Highlight C++ keywords
+    code = code.replace(/\b(class|struct|public|private|protected|virtual|override|final|const|static|friend|explicit|delete|default|new|return|if|else|for|while|void|bool|true|false|nullptr|noexcept|using|typename|template|auto|throw|try|catch|operator|this)\b/g,
+        '<span class="hl-kw">$1</span>');
+
+    // Highlight common C++ types & std identifiers
+    code = code.replace(/\b(int|double|float|char|long|short|unsigned|size_t|std|string|vector|unique_ptr|shared_ptr|weak_ptr|ostream|istream|invalid_argument|copy|swap|move)\b/g,
+        '<span class="hl-type">$1</span>');
+
+    // Highlight numbers
+    code = code.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="hl-num">$1</span>');
+
+    // Restore strings & comments
+    code = code.replace(/___TOK_(\d+)___/g, (_, idx) => tokens[Number(idx)]);
+
+    return code;
+}
+
+function formatInlineText(text) {
+    let escaped = escapeHTML(text);
+    // Inline code `...`
+    escaped = escaped.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    // Bold **...**
+    escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    return escaped;
+}
+
+function formatAnswer(rawAnswer) {
+    // Split out fenced C++ code blocks first
+    const parts = rawAnswer.split(/```cpp\n([\s\S]*?)```/g);
+    let html = "";
+
+    for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 1) {
+            const rawCode = parts[i].trimEnd();
+            const highlighted = highlightCpp(rawCode);
+            html += `
+                <div class="code-wrap">
+                    <div class="code-header">
+                        <span>C++</span>
+                        <button type="button" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>${highlighted}</code></pre>
+                </div>
+            `;
+        } else {
+            const textBlock = parts[i].trim();
+            if (!textBlock) continue;
+
+            const lines = textBlock.split("\n");
+            let inList = false;
+            let paraBuffer = [];
+
+            const flushPara = () => {
+                if (paraBuffer.length > 0) {
+                    html += `<p>${formatInlineText(paraBuffer.join(" "))}</p>`;
+                    paraBuffer = [];
+                }
+            };
+
+            const closeList = () => {
+                if (inList) {
+                    html += `</ul>`;
+                    inList = false;
+                }
+            };
+
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed) {
+                    flushPara();
+                    closeList();
+                } else if (trimmed.startsWith("- ")) {
+                    flushPara();
+                    if (!inList) {
+                        html += `<ul>`;
+                        inList = true;
+                    }
+                    html += `<li>${formatInlineText(trimmed.slice(2))}</li>`;
+                } else {
+                    closeList();
+                    paraBuffer.push(trimmed);
+                }
+            });
+
+            flushPara();
+            closeList();
+        }
+    }
+
+    return html;
+}
+
+function matchesItem(chapter, item, id, completed) {
+    const qLabel = `q${id}`;
+    const matchesSearch =
+        searchTerm === "" ||
+        qLabel.includes(searchTerm) ||
+        item.q.toLowerCase().includes(searchTerm) ||
+        item.a.toLowerCase().includes(searchTerm) ||
+        chapter.title.toLowerCase().includes(searchTerm);
+
+    const matchesFilter =
+        currentFilter === "all" ||
+        (currentFilter === "completed" && completed) ||
+        (currentFilter === "remaining" && !completed);
+
+    return matchesSearch && matchesFilter;
+}
+
+function render() {
+    const container = document.getElementById("questionContainer");
+    container.innerHTML = "";
+
+    let visibleCount = 0;
+
+    chapters.forEach((chapter, chapterIndex) => {
+        const chapterItems = chapter.items.map((item, questionIndex) => {
+            const id = getQuestionId(chapterIndex, questionIndex);
+            const completed = !!saved[id];
+            return {
+                q: item.q,
+                a: item.a,
+                id,
+                completed
+            };
+        });
+
+        const filtered = chapterItems.filter(item =>
+            matchesItem(chapter, item, item.id, item.completed)
+        );
+
+        visibleCount += filtered.length;
+
+        if (filtered.length === 0) {
+            return;
+        }
+
+        const chapterCompleted = chapterItems.filter(q => q.completed).length;
+        const isCollapsed = collapsedChapters.has(chapterIndex);
+
+        const section = document.createElement("section");
+        section.className = "chapter" + (isCollapsed ? " collapsed" : "");
+
+        const header = document.createElement("div");
+        header.className = "chapter-header";
+
+        header.innerHTML = `
+            <div>
+                <h3>${chapterIndex + 1}. ${escapeHTML(chapter.title)}</h3>
+                <p>${escapeHTML(chapter.range)} · ${chapter.items.length} questions</p>
+            </div>
+            <div class="chapter-meta">
+                <span class="chapter-progress">
+                    ${chapterCompleted}/${chapter.items.length} Completed
+                </span>
+                <span class="chapter-chevron">▼</span>
+            </div>
+        `;
+
+        const questionArea = document.createElement("div");
+        questionArea.className = "questions" + (isCollapsed ? " hidden" : "");
+
+        filtered.forEach(item => {
+            const isAnswerOpen = openAnswers.has(item.id);
+            const row = document.createElement("div");
+            row.className = "question" + (item.completed ? " completed" : "");
+
+            row.innerHTML = `
+                <div class="question-top">
+                    <div class="question-main">
+                        <input type="checkbox" ${item.completed ? "checked" : ""}
+                               aria-label="Mark question ${item.id} completed">
+                        <div class="question-text" role="button" tabindex="0" aria-expanded="${isAnswerOpen}">
+                            <span class="q-number">Q${item.id}.</span>${escapeHTML(item.q)}
+                        </div>
+                    </div>
+                    <button type="button" class="toggle-answer-btn ${isAnswerOpen ? "open" : ""}" aria-expanded="${isAnswerOpen}">
+                        ${isAnswerOpen ? "Hide Answer ▲" : "Show Answer ▼"}
+                    </button>
+                </div>
+                <div class="answer-box ${isAnswerOpen ? "" : "hidden"}">
+                    <div class="answer-header">
+                        <span class="verified-badge">✓ Verified C++ Answer</span>
+                        <span class="topic-tag">${escapeHTML(chapter.title)}</span>
+                    </div>
+                    <div class="answer-body">
+                        ${formatAnswer(item.a)}
+                    </div>
+                </div>
+            `;
+
+            const checkbox = row.querySelector("input[type='checkbox']");
+            checkbox.addEventListener("change", () => {
+                saved[item.id] = checkbox.checked;
+                save();
+                render();
+            });
+
+            const toggleAnswer = () => {
+                if (openAnswers.has(item.id)) {
+                    openAnswers.delete(item.id);
+                } else {
+                    openAnswers.add(item.id);
+                }
+                const nowOpen = openAnswers.has(item.id);
+                const box = row.querySelector(".answer-box");
+                const btn = row.querySelector(".toggle-answer-btn");
+                const qText = row.querySelector(".question-text");
+
+                box.classList.toggle("hidden", !nowOpen);
+                btn.classList.toggle("open", nowOpen);
+                btn.textContent = nowOpen ? "Hide Answer ▲" : "Show Answer ▼";
+                btn.setAttribute("aria-expanded", String(nowOpen));
+                qText.setAttribute("aria-expanded", String(nowOpen));
+            };
+
+            const questionTextEl = row.querySelector(".question-text");
+            const toggleBtn = row.querySelector(".toggle-answer-btn");
+
+            questionTextEl.addEventListener("click", toggleAnswer);
+            questionTextEl.addEventListener("keydown", e => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleAnswer();
+                }
+            });
+            toggleBtn.addEventListener("click", toggleAnswer);
+
+            questionArea.appendChild(row);
+        });
+
+        header.addEventListener("click", () => {
+            if (collapsedChapters.has(chapterIndex)) {
+                collapsedChapters.delete(chapterIndex);
+            } else {
+                collapsedChapters.add(chapterIndex);
+            }
+            section.classList.toggle("collapsed");
+            questionArea.classList.toggle("hidden");
+        });
+
+        section.appendChild(header);
+        section.appendChild(questionArea);
+        container.appendChild(section);
+    });
+
+    if (visibleCount === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.innerHTML = `<p>No questions or answers matched <strong>"${escapeHTML(searchTerm)}"</strong> under the current filter.</p>`;
+        container.appendChild(empty);
+    }
+
+    document.getElementById("filterInfo").textContent =
+        `Showing ${visibleCount} of 200 questions based on your current filter.`;
+
+    updateStats();
+}
+
+function updateStats() {
+    const total = chapters.reduce((sum, c) => sum + c.items.length, 0);
+    const completed = Object.values(saved).filter(Boolean).length;
+    const remaining = total - completed;
+    const percent = total ? Math.round((completed / total) * 100) : 0;
+
+    document.getElementById("totalCount").textContent = total;
+    document.getElementById("completedCount").textContent = completed;
+    document.getElementById("remainingCount").textContent = remaining;
+    document.getElementById("percentage").textContent = percent + "%";
+    document.getElementById("progressFill").style.width = percent + "%";
+
+    const message = percent === 100
+        ? "All 200 C++ OOP questions completed! You are interview-ready."
+        : percent >= 75
+        ? "Almost there! Review edge cases and virtual dispatch rules."
+        : percent >= 50
+        ? "Over halfway! Keep mastering memory management and polymorphism."
+        : percent >= 25
+        ? "Solid momentum! Stay consistent across all 12 chapters."
+        : "Start checking off questions as you master them.";
+
+    document.getElementById("progressMessage").textContent = message;
+}
+
+function filterQuestions(filter) {
+    currentFilter = filter;
+    document.getElementById("btnFilterAll").classList.toggle("active-filter", filter === "all");
+    document.getElementById("btnFilterCompleted").classList.toggle("active-filter", filter === "completed");
+    document.getElementById("btnFilterRemaining").classList.toggle("active-filter", filter === "remaining");
+    render();
+}
+
+function expandAllAnswers() {
+    collapsedChapters.clear();
+    chapters.forEach((chapter, chapterIndex) => {
+        chapter.items.forEach((item, questionIndex) => {
+            const id = getQuestionId(chapterIndex, questionIndex);
+            const completed = !!saved[id];
+            if (matchesItem(chapter, item, id, completed)) {
+                openAnswers.add(id);
+            }
+        });
+    });
+    render();
+    showToast("Expanded all visible answers");
+}
+
+function collapseAllAnswers() {
+    openAnswers.clear();
+    render();
+    showToast("Collapsed all answers");
+}
+
+function markVisible() {
+    let count = 0;
+    chapters.forEach((chapter, chapterIndex) => {
+        chapter.items.forEach((item, questionIndex) => {
+            const id = getQuestionId(chapterIndex, questionIndex);
+            const completed = !!saved[id];
+            if (matchesItem(chapter, item, id, completed)) {
+                saved[id] = true;
+                count++;
+            }
+        });
+    });
+
+    save();
+    render();
+    showToast(`Marked ${count} visible question${count === 1 ? "" : "s"} completed`);
+}
+
+function unmarkVisible() {
+    let count = 0;
+    chapters.forEach((chapter, chapterIndex) => {
+        chapter.items.forEach((item, questionIndex) => {
+            const id = getQuestionId(chapterIndex, questionIndex);
+            const completed = !!saved[id];
+            if (matchesItem(chapter, item, id, completed)) {
+                saved[id] = false;
+                count++;
+            }
+        });
+    });
+
+    save();
+    render();
+    showToast(`Unmarked ${count} visible question${count === 1 ? "" : "s"}`);
+}
+
+function openResetModal() {
+    document.getElementById("resetModal").classList.remove("hidden");
+}
+
+function closeResetModal() {
+    document.getElementById("resetModal").classList.add("hidden");
+}
+
+function confirmResetTracker() {
+    saved = {};
+    save();
+    render();
+    closeResetModal();
+    showToast("All progress has been reset");
+}
+
+function copyCode(buttonEl) {
+    const codeEl = buttonEl.closest(".code-wrap").querySelector("code");
+    const rawText = codeEl.textContent;
+
+    const textarea = document.createElement("textarea");
+    textarea.value = rawText;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand("copy");
+        const original = buttonEl.textContent;
+        buttonEl.textContent = "Copied!";
+        showToast("C++ snippet copied to clipboard");
+        setTimeout(() => {
+            buttonEl.textContent = original;
+        }, 1500);
+    } catch {
+        showToast("Unable to copy code");
+    }
+    document.body.removeChild(textarea);
+}
+
+let toastTimer = null;
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2200);
+}
+
+document.getElementById("searchInput").addEventListener("input", event => {
+    searchTerm = event.target.value.toLowerCase().trim();
+    render();
+});
+
+document.getElementById("resetModal").addEventListener("click", event => {
+    if (event.target.id === "resetModal") {
+        closeResetModal();
+    }
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeResetModal();
+    }
+});
+
+render();
+</script>
+
+</body>
+</html>
